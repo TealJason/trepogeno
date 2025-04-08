@@ -1,15 +1,12 @@
 This repo contains two scripts one for creating a basic coordinate-file from a vcf and one for adding lineages to this file based on rPinceone outputs
 
-Function:
-This script take a vcf and a csv produced by rPinecone then outputs a suitable panel.json for mykrobe to use
+#reference_coordinate_file.py:
+##Function:
+This script take a vcf a produces a reference coordinates file as detailed in:
+https://github.com/Mykrobe-tools/mykrobe/wiki/Custom-Panels
 
-Usage example:
-python3 make_tp_panel.py \
-  --vcf 2025-01-31_masked_snps.vcf \
-  --csv rPineCone9-5.pinecone.bootstrap.table.csv \
-  --bootstrap pinecone_50 \
-  --output treponema_panel.json
 
-Requirments:
-PyVCF
+#make_lineage_reference_file.py:
+##Function: 
+This takes the reference coordinates file from reference_coordinate_file.py and adds lineage data taken from a rPinecone bootstrap.table.csv output
 
