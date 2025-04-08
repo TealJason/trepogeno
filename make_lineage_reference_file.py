@@ -27,8 +27,11 @@ def build_pinecone_dict(pinecone_df: pd.DataFrame, pinecone_number: int) -> Dict
 
     for index, row in pinecone_df.iterrows():
         sub_lineage = row['Sub-lineage']
+        major_lineage = row['Major.Sub-lineage']
+        lineage= f"lineage{major_lineage}.{sub_lineage}"
         position = row[pinecone_threshold]
-        sublineage_dict[sub_lineage].append(position)
+        sublineage_dict[lineage].append(position)
+
     return sublineage_dict
 
 def add_lineages(coordinate_df: pd.DataFrame, pinecone_dict: Dict[str,list[int]], output_path: Path,)-> None:
@@ -40,9 +43,10 @@ def add_lineages(coordinate_df: pd.DataFrame, pinecone_dict: Dict[str,list[int]]
             alt = row[3]
             dna_type = row[4]
             lineages = []
-            for sublineage, positions in pinecone_dict.items():
+            for lineage, positions in pinecone_dict.items():
                 if pos in positions:
-                    lineages.append(sublineage)
+                    lineages.append(lineage)
+                 
             if lineages:
                 out_file.write(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\t{','.join(lineages)}\n")
             else:
