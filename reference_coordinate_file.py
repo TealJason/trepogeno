@@ -14,7 +14,7 @@ def extract_columns(vcf_path, output_path='./reference_coordinates.txt'):
             if line.startswith("#"):
                 continue  # Skip header lines
             columns = line.strip().split("\t")
-            chrom = columns[0]
+            chrom = "ref"
             pos = columns[1]
             ref = columns[3]
             alt = columns[4]
