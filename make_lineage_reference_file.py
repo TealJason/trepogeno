@@ -22,7 +22,6 @@ def parse_args():
 
 def build_pinecone_dict(pinecone_df: pd.DataFrame, pinecone_number: int) -> Dict[str, List[str]]:
     pinecone_threshold = f"pinecone_{pinecone_number}"
-    print(pinecone_threshold)
     sublineage_dict = defaultdict(list)
 
     for index, row in pinecone_df.iterrows():
@@ -42,10 +41,10 @@ def add_lineages(coordinate_df: pd.DataFrame, pinecone_dict: Dict[str,list[int]]
             ref = row[2]
             alt = row[3]
             dna_type = row[4]
-            lineages = []
-            for lineage, positions in pinecone_dict.items():
+            lineage = None
+            for lineage_key, positions in pinecone_dict.items():
                 if pos in positions:
-                    lineages.append(lineage)
+                    lineages = lineage_key
                  
             if lineages:
                 out_file.write(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\t{','.join(lineages)}\n")
