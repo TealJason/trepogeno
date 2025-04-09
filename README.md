@@ -1,5 +1,6 @@
-This repo contains two scripts one for creating a basic coordinate-file from a vcf and one for adding lineages to this file based on rPinceone outputs
-mykrobe requires a reference file for making a probes and lineage file used in lineage calling:
+This repo contains two scripts one for creating a basic coordinate-file from a vcf and one for adding lineages to this file based on rPinceone outputs.
+Mykrobe requires the output file from make_lineage_reference_file.py for making a probes.fa and lineage.json with the `mykrobe variants make-probes` command.
+The outputs from this are then used in lineage calling with the `mykrobe predict` command:
 
 # reference_coordinate_file.py:
 ## Function:
