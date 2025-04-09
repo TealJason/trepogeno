@@ -44,10 +44,10 @@ def add_lineages(coordinate_df: pd.DataFrame, pinecone_dict: Dict[str,list[int]]
             lineage = None
             for lineage_key, positions in pinecone_dict.items():
                 if pos in positions:
-                    lineages = lineage_key
+                    lineage = lineage_key
                  
-            if lineages:
-                out_file.write(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\t{','.join(lineages)}\n")
+            if lineage:
+                out_file.write(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\t{','.join(lineage)}\n")
             else:
                 out_file.write(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\n")
 
