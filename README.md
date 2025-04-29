@@ -60,7 +60,7 @@ https://github.com/Mykrobe-tools/mykrobe/wiki/Custom-Lineage-Calling
 --output . (Required)  
 
 ### Output
-lineage_coordonate_output.txt
+lineage_coordinate_output.txt
 
 ```
 ref	1000	A	T	DNA	lineage1
