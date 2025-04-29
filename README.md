@@ -25,7 +25,7 @@ This script takes a vcf and the "snp matrix" from create_matrix_from_vcf.py and 
 --snp_csv path/snp_matrix.csv (Required)  
 --cluster_file path/PineCone2-2.pinecone.bootstrap.table.csv (Required)  
 --output . (Requried)  
---pinecone_threshold 95 (Optional, default is 50 can enter values 95, 80, 50, 20, or 5)  
+--pinecone_threshold 95 (Optional, default is 50 only works with values 95, 80, 50, 20, or 5)  
 
 ### Output
 lineage_defining_snps.csv
@@ -57,7 +57,9 @@ https://github.com/Mykrobe-tools/mykrobe/wiki/Custom-Lineage-Calling
 ### Argument Example 
 --reference_coordinate path/reference_coordinates.txt (Required)  
 --lineage_defining_snps path/lineage_defining_snps.csv(Required)  
---output . (Required)  
+--cluster_file path/PineCone2-2.pinecone.bootstrap.table.csv (Required)  
+--pinecone_threshold 95 (Optional, default is 50 only works with values 95, 80, 50, 20, or 5)  
+--output . (Optional)  
 
 ### Output
 lineage_coordinate_output.txt

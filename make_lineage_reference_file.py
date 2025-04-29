@@ -8,7 +8,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Build Mykrobe panel from VCF and rPinecone clusters")
     parser.add_argument("--reference_coordinate", type=Path, required=True, help="Path to basic reference coordinate file")
     parser.add_argument("--lineage_defining_snps", type=Path, required=True, help="Path to lineage defining snps file")
-    parser.add_argument("--pinecone_table", type=Path, required=True, help="Path to full rPinecone table (with Sub-lineage info)")
+    parser.add_argument("--cluster_file", type=Path, required=True, help="Path to full rPinecone table (with Sub-lineage info)")
     parser.add_argument("--pinecone_threshold", type=int, default=50, help="Pinecone threshold (default=50)")
     parser.add_argument("--output", type=Path, default="lineage_coordinate_output.txt", help="Output path for Mykrobe panel")
     return parser.parse_args()
@@ -64,7 +64,7 @@ def main():
 
     lineage_df = pd.read_csv(args.lineage_defining_snps)
     coordinate_df = pd.read_csv(args.reference_coordinate, sep='\t', header=None)
-    pinecone_df = pd.read_csv(args.pinecone_table)
+    pinecone_df = pd.read_csv(args.cluster_file)
 
     print("Creating lineage to snp posistion map...")
     lineage_snp_map = build_lineage_dict(lineage_df, pinecone_df, args.pinecone_threshold)
