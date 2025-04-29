@@ -7,20 +7,16 @@ from typing import Dict, List, Set
 def parse_args():
     parser = argparse.ArgumentParser(description="Build Mykrobe panel from VCF and rPinecone clusters")
     parser.add_argument("--reference_coordinate",type=Path, required=True, help="Path to basic reference coordinate file")
-    parser.add_argument("--pinecone_csv",type=Path, required=True, help="Path to rPinecone clusters")
+    parser.add_argument("--lineage_defining_snps",type=Path, required=True, help="Path to lineage defining snps file")
     parser.add_argument("--output",type=Path, default="lineage_coordinate_output.txt", help="Output path for Mykrobe panel")
-    parser.add_argument("--pinecone_threshold",type=int,default=50,help="Pinecone threshold can be 95, 80, 50, 20, or 5. Default is 50")
 
     args = parser.parse_args()
-    if args.pinecone_threshold not in [5, 20, 50, 80, 95]:
-        raise ValueError("Pinecone threshold must be one of [5, 20, 50, 80, 95]")
-        exit()
-    if args.reference_coordinate is None or args.pinecone_csv is None:
+    if args.reference_coordinate is None or args.lineage_defining_snps is None:
         raise ValueError("Both reference_coordinate and pinecone_csv must be provided")
         exit()
     return args
 
-def build_pinecone_dict(pinecone_df: pd.DataFrame, pinecone_number: int) -> Dict[str, List[str]]:
+def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_number: int) -> Dict[str, List[str]]:
     pinecone_threshold = f"pinecone_{pinecone_number}"
     sublineage_dict = defaultdict(list)
 
@@ -53,11 +49,12 @@ def add_lineages(coordinate_df: pd.DataFrame, pinecone_dict: Dict[str,list[int]]
 
 def main():
     args = parse_args()
-    pinecone_df = pd.read_csv(args.pinecone_csv)
+    lineage_defined_df = pd.read_csv(args.lineage_defining_snps)
     coordinate_df = pd.read_csv(args.reference_coordinate,sep='\t',header=None)
-    print(pinecone_df.head(3))
-    print(coordinate_df.head(3))
-    pinecone_dict = build_pinecone_dict(pinecone_df, args.pinecone_threshold)
+    print(lineage_defined_df.head(n=3))
+    print(lineage_defined_df.head(n=3))
+
+    lineage_dict = build_lineage_dict(pinecone_df, args.pinecone_threshold)
     add_lineages(coordinate_df,pinecone_dict,args.output)
 
 if __name__ == "__main__":

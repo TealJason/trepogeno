@@ -23,6 +23,5 @@ def main():
     args = parse_args()
     extract_columns(args.vcf)
 
-
 if __name__ == "__main__":
     main()
