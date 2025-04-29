@@ -12,7 +12,7 @@ the value will contain either the ref or alt alelle dependent on if a 0 or 1 is 
 this file is used in the 'extract_leage_defining_snps.py' script 
 
 ### Argument Example 
---vcf path/2025-01-31_masked_snps.vcf (Required)
+--vcf path/2025-01-31_masked_snps.vcf (Required)  
 
 ### Output
 snp_matrix.csv
@@ -22,10 +22,10 @@ snp_matrix.csv
 This script takes a vcf and the "snp matrix" from create_matrix_from_vcf.py and uses it to deterime which snps in which genomic positions define the lineages defined by rPinecone.
 
 ### Argument Example 
---snp_csv path/snp_matrix.csv (Required)
---cluster_file path/PineCone2-2.pinecone.bootstrap.table.csv (Required)
---output . (Requried)
---pinecone_threshold 95 (Optional, default is 50 can enter values 95, 80, 50, 20, or 5)
+--snp_csv path/snp_matrix.csv (Required)  
+--cluster_file path/PineCone2-2.pinecone.bootstrap.table.csv (Required)  
+--output . (Requried)  
+--pinecone_threshold 95 (Optional, default is 50 can enter values 95, 80, 50, 20, or 5)  
 
 ### Output
 lineage_defining_snps.csv
@@ -36,7 +36,7 @@ This script take a vcf a produces a reference coordinates file as detailed in:
 https://github.com/Mykrobe-tools/mykrobe/wiki/Custom-Panels
 
 ### Argument Example 
---vcf path/2025-01-31_masked_snps.vcf (Required)
+--vcf path/2025-01-31_masked_snps.vcf (Required)  
 
 ### Output
 reference_coordinates.txt
@@ -55,9 +55,9 @@ further details can be found here:
 https://github.com/Mykrobe-tools/mykrobe/wiki/Custom-Lineage-Calling
 
 ### Argument Example 
---reference_coordinate path/reference_coordinates.txt (Required)
---lineage_defining_snps path/lineage_defining_snps.csv(Required)
---output . (Required)
+--reference_coordinate path/reference_coordinates.txt (Required)  
+--lineage_defining_snps path/lineage_defining_snps.csv(Required)  
+--output . (Required)  
 
 ### Output
 lineage_coordonate_output.txt
