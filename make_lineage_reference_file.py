@@ -13,11 +13,11 @@ def parse_args():
     parser.add_argument("--output", type=Path, default="lineage_coordinate_output.txt", help="Output path for Mykrobe panel")
     return parser.parse_args()
 
-
 def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_df: pd.DataFrame, pinecone_number: int) -> Dict[str, List[int]]:
     pinecone_col = f"pinecone_{pinecone_number}"
     cluster_to_lineage = {}
 
+    #Create a dictionary of lineages to clusters 
     for _, row in pinecone_df.iterrows():
         cluster = row[pinecone_col]
         sub_lineage = row["Sub-lineage"]
@@ -25,6 +25,7 @@ def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_df: pd.DataFrame, pine
         lineage = f"lineage{major_lineage}.{sub_lineage}"
         cluster_to_lineage[cluster] = lineage
 
+    #Create a dictionary of lineages to snp positions
     lineage_snp_map = defaultdict(list)
     for _, row in lineage_df.iterrows():
         cluster = row["Cluster"]
@@ -35,8 +36,9 @@ def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_df: pd.DataFrame, pine
 
     return lineage_snp_map
 
-
 def add_lineages(coordinate_df: pd.DataFrame, lineage_snp_map: Dict[str, List[int]], output_path: Path) -> None:
+    
+    #Using the dictionary of lineages to snp positions annoate the reference file
     output_lines = []
     for _, row in coordinate_df.iterrows():
         chrom = row[0]
@@ -57,7 +59,6 @@ def add_lineages(coordinate_df: pd.DataFrame, lineage_snp_map: Dict[str, List[in
         for line in output_lines:
             f.write(line + "\n")
 
-
 def main():
     args = parse_args()
 
@@ -65,12 +66,12 @@ def main():
     coordinate_df = pd.read_csv(args.reference_coordinate, sep='\t', header=None)
     pinecone_df = pd.read_csv(args.pinecone_table)
 
+    print("Creating lineage to snp posistion map...")
     lineage_snp_map = build_lineage_dict(lineage_df, pinecone_df, args.pinecone_threshold)
 
     print("Annotating reference coordinates...")
     add_lineages(coordinate_df, lineage_snp_map, args.output)
     print(f"Done. Output written to: {args.output}")
-
 
 if __name__ == "__main__":
     main()
