@@ -1,7 +1,8 @@
-This repo contains  scripts for creating a basic coordinate-file with lineages for mykrobes lineage calling 
-Mykrobe requires the output file from make_lineage_reference_file.py for making a probes.fa and lineage.json with the `mykrobe variants make-probes` command.
-The outputs from this are then used in lineage calling with the `mykrobe predict` command:
-This script requires the a vcf and the pinecone table.csv file with assigned clsuters and lineags to samples.
+This repo contains  scripts for creating a basic coordinate-file with lineages for mykrobes lineage calling.  
+Mykrobe requires the output  from make_lineage_reference_file.py to make its probes.fa and lineage.json files via the `mykrobe variants make-probes` command.  
+The outputs from this are then used in lineage calling with the `mykrobe predict` command.  
+This script requires a vcf and the *.pinecone.bootstrap.table.csv from rPinecone which has clusters and lineags assignments to samples.  
+
 
 # create_matrix_from_vcf.py:
 ## Function:
