@@ -21,6 +21,8 @@ def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_df: pd.DataFrame, pine
     for _, row in pinecone_df.iterrows():
         cluster = row[pinecone_col]
         sub_lineage = row["Sub-lineage"]
+        if sub_lineage.startswith("singleton_"):
+            sub_lineage = sub_lineage.split("_")[1]
         major_lineage = row["Major.Sub-lineage"]
         lineage = f"lineage{major_lineage}.{sub_lineage}"
         cluster_to_lineage[cluster] = lineage
@@ -52,8 +54,6 @@ def add_lineages(coordinate_df: pd.DataFrame, lineage_snp_map: Dict[str, List[in
         if matched_lineages:
             lineage_str = ",".join(matched_lineages)
             output_lines.append(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\t{lineage_str}")
-        else:
-            output_lines.append(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}")
 
     with open(output_path, "w") as f:
         for line in output_lines:
