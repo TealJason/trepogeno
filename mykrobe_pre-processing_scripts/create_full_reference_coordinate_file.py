@@ -1,19 +1,42 @@
 import argparse
-from collections import defaultdict
 from pathlib import Path
 import pandas as pd
 from typing import Dict, List
+from collections import defaultdict
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Build Mykrobe panel from VCF and rPinecone clusters")
-    parser.add_argument("--reference_coordinate", type=Path, required=True, help="Path to basic reference coordinate file")
+    parser = argparse.ArgumentParser(description="create a refeerce coordinate file and build Mykrobe panel from VCF and rPinecone clusters")
+    parser.add_argument("--vcf",type=Path, required=True, help="Path to VCF file")
     parser.add_argument("--lineage_defining_snps", type=Path, required=True, help="Path to lineage defining snps file")
     parser.add_argument("--cluster_file", type=Path, required=True, help="Path to full rPinecone table (with Sub-lineage info)")
-    parser.add_argument("--pinecone_threshold", type=int, default=50, help="Pinecone threshold (default=50)")
-    parser.add_argument("--output", type=Path, default="lineage_coordinate_output.txt", help="Output path for Mykrobe panel")
-    return parser.parse_args()
+    parser.add_argument("--pinecone_threshold", type=int, default=50, help="Pinecone threshold (default=50) ")
+    parser.add_argument("--output", type=Path, default="./lineage_coordinate_output.tsv", help="Output path for Mykrobe panel")
+    args = parser.parse_args()
+    return args
 
-def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_df: pd.DataFrame, pinecone_number: int) -> Dict[str, List[int]]:
+def extract_columns(vcf_path, output_path='./reference_coordinates.txt'):
+    data = []
+
+    with open(vcf_path, "r") as vcf_file:
+        for line in vcf_file:
+            if line.startswith("#"):
+                continue  # Skip header lines
+            columns = line.strip().split("\t")
+            chrom = "ref"
+            pos = columns[1]
+            ref = columns[3]
+            alt = columns[4]
+            data.append([chrom, pos, ref, alt, "DNA"])
+
+    # Create DataFrame
+    lineage_file_df = pd.DataFrame(data, columns=["CHROM", "POS", "REF", "ALT", "TYPE"])
+    
+    # Save to file
+    lineage_file_df.to_csv(output_path, sep="\t", index=False)
+
+    return lineage_file_df
+
+def build_lineage_dict(lineage_df, pinecone_df, pinecone_number):
     pinecone_col = f"pinecone_{pinecone_number}"
     cluster_to_lineage = {}
 
@@ -38,7 +61,7 @@ def build_lineage_dict(lineage_df: pd.DataFrame, pinecone_df: pd.DataFrame, pine
 
     return lineage_snp_map
 
-def add_lineages(coordinate_df: pd.DataFrame, lineage_snp_map: Dict[str, List[int]], output_path: Path) -> None:
+def add_lineages(coordinate_df, lineage_snp_map, output_path):
     
     #Using the dictionary of lineages to snp positions annoate the reference file
     output_lines = []
@@ -61,16 +84,18 @@ def add_lineages(coordinate_df: pd.DataFrame, lineage_snp_map: Dict[str, List[in
 
 def main():
     args = parse_args()
+    reference_coordinate_df = extract_columns(args.vcf)
 
     lineage_df = pd.read_csv(args.lineage_defining_snps)
-    coordinate_df = pd.read_csv(args.reference_coordinate, sep='\t', header=None)
+
     pinecone_df = pd.read_csv(args.cluster_file)
 
     print("Creating lineage to snp posistion map...")
     lineage_snp_map = build_lineage_dict(lineage_df, pinecone_df, args.pinecone_threshold)
 
     print("Annotating reference coordinates...")
-    add_lineages(coordinate_df, lineage_snp_map, args.output)
+    add_lineages(reference_coordinate_df, lineage_snp_map, args.output)
+
     print(f"Done. Output written to: {args.output}")
 
 if __name__ == "__main__":
