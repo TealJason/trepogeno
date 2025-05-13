@@ -1,8 +1,8 @@
 This repo contains  scripts for creating a basic coordinate-file with lineages for mykrobes lineage calling.  
-Mykrobe requires the output  from make_lineage_reference_file.py to make its probes.fa and lineage.json files via the `mykrobe variants make-probes` command.  
-The outputs from this are then used in lineage calling with the `mykrobe predict` command.  
-This script requires a vcf and the *.pinecone.bootstrap.table.csv from rPinecone which has clusters and lineags assignments to samples.  
-
+Mykrobe requires the output from create_full_reference_coordinate_file to make its probes.fa and lineage.json files via the `mykrobe variants make-probes` command.  
+The outputs from the make-probes command are used for lineage calling with `mykrobe predict`.  
+These scripts require a vcf and the .pinecone.bootstrap.table.csv from rPinecone which has clusters and lineage cluster assignments against samples.  
+Whith these the scripts can work out which snps define a lineage my checking which snps are present in all members of a lineage cluster while being absent from all other samples.
 
 # create_matrix_get_lineage_defining_snps.py.py:
 ## Function:
@@ -53,3 +53,6 @@ ref	2000	C	A	DNA	lineage1.1
 ref	3000	G	C	DNA	lineage1.2
 ref	4000	T	A	DNA	lineage2
 ```
+
+#### Improvements
+This script as of yet is not considering a situation where all samples carry the alternative allele against reference used in the vcf which may be lineage defining. 
