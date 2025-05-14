@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import argparse
 from pathlib import Path
+import logging
+import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Build file of lineage defining snps")
@@ -16,8 +18,15 @@ def parse_args():
     return args
 
 def load_vcf_into_df(vcf):
-    vcf_df = pd.read_csv(vcf, skiprows=46, sep="\t")
-    return vcf_df
+    try:
+        vcf_df = pd.read_csv(vcf, skiprows=46, sep="\t")
+        print("VCF DataFrame:")
+        print(vcf_df.head(n=2))
+        return vcf_df
+
+    except Exception as e:
+        logging.error(f"Encountered error while try to read vcf file into a dataframe {e}")
+        sys.exit(1)
 
 def initialise_snp_df(vcf_df):
     samples_df = vcf_df.iloc[:, 9:]
@@ -28,11 +37,8 @@ def initialise_snp_df(vcf_df):
 
 def create_matrix(vcf_df,output):
     snp_matrix_df = initialise_snp_df(vcf_df)
-    print("Initial SNP Matrix:")
+    print("Initial Matrix infered from vcf:")
     print(snp_matrix_df.head(n=2))
-
-    print("VCF DataFrame:")
-    print(vcf_df.head(n=2))
 
     #create dict for pos to ref and pos to alt
     pos_to_ref = vcf_df.set_index('POS')['REF'].to_dict()
@@ -109,6 +115,7 @@ def cluster(clusters_df,snp_matrix,pinecone_threshold,output_file):
 
 def main():
     args = parse_args()
+
     vcf_df = load_vcf_into_df(args.vcf)
     snp_matrix = create_matrix(vcf_df, args.output)
 
