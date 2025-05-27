@@ -43,7 +43,6 @@ def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
             "possible_calls": possible_calls
         }
 
-
         full_dictionary.update(single_sample_dictionary_full)
     return full_dictionary
 
@@ -57,8 +56,7 @@ def get_json_file_paths(json_directory_path):
 def create_and_write_table(full_dictionary):
     for sample_id, lineages in full_dictionary.items():
         for lineage, stats in lineages.items():
-            print(f"Sample {sample_id} found support for lineage {lineage}, there were {stats['calls_made']} total calls made out of a possible {stats['possible_calls']}")
-
+            print(f"Sample {sample_id} found {stats['calls_made']} SNP's to support lineage {lineage}, out of a total possible of {stats['possible_calls']}")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
