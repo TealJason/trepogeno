@@ -108,35 +108,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-""" 
-   single_sample_dictionary_full = {
-        ERR9768236{
-            TPE.1.1"{
-                calls_made:743,possible_calls:892
-            }
-            TPE.1.3{
-                calls_made:5,possible_calls:90
-            }
-        }
-        SRR14277265{
-            TPE.1.1"{
-                calls_made:1,possible_calls:3
-            }
-            TPE.1.3{
-                calls_made:0,possible_calls:0
-            }
-        }
-    }
-"""
-
-'''
-Simple table:
-
-Sample_id   |Lineage |Calls made |Possible calls|              |
------------ |--------|-----------|--------------|--------------|
-SRR14277265 |TPE     |  33       |      42      |              |
------------ |--------|-----------|--------------|--------------|
-ERR9768236  |TPE.3.1 |  30       |      38      |              |
-
-'''
