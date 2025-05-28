@@ -62,8 +62,21 @@ def build_lineage_dict(lineage_df, pinecone_df, pinecone_number):
     return lineage_snp_map
 
 def add_lineages(coordinate_df, lineage_snp_map, output_path):
-    
-    #Using the dictionary of lineages to snp positions annoate the reference file
+    # Expand each lineage to include all descendant lineages
+    expanded_lineage_snp_map = defaultdict(list)
+    all_lineages = list(lineage_snp_map.keys())
+
+    for lineage, positions in lineage_snp_map.items():
+        # Include this lineage's SNPs in all descendant lineages
+        for descendant in all_lineages:
+            if descendant == lineage or descendant.startswith(f"{lineage}."):
+                expanded_lineage_snp_map[descendant].extend(positions)
+
+    # Remove duplicates
+    for lineage in expanded_lineage_snp_map:
+        expanded_lineage_snp_map[lineage] = list(set(expanded_lineage_snp_map[lineage]))
+
+    # Annotate the VCF-based coordinate file
     output_lines = []
     for _, row in coordinate_df.iterrows():
         chrom = row[0]
@@ -72,10 +85,10 @@ def add_lineages(coordinate_df, lineage_snp_map, output_path):
         alt = row[3]
         dna_type = row[4]
 
-        matched_lineages = [lineage for lineage, positions in lineage_snp_map.items() if pos in positions]
+        matched_lineages = [lineage for lineage, positions in expanded_lineage_snp_map.items() if pos in positions]
 
         if matched_lineages:
-            lineage_str = ",".join(matched_lineages)
+            lineage_str = ",".join(sorted(matched_lineages))
             output_lines.append(f"{chrom}\t{pos}\t{ref}\t{alt}\t{dna_type}\t{lineage_str}")
 
     with open(output_path, "w") as f:
