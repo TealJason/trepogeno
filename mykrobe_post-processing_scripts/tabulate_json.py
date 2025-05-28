@@ -1,6 +1,7 @@
 import json
 import argparse
 from pathlib import Path
+import pandas as pd
 
 def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
     keys = list(json_dict)
@@ -20,6 +21,7 @@ def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
 
         if check_all == False:
             calls = json_dict[sample_id]["phylogenetics"]["lineage"]["calls"].get(lineage, {})
+
             for sublineage, probes in calls.items():
                 for probe_id, probe_data in probes.items():
                     genotype = probe_data.get("genotype")
@@ -30,6 +32,7 @@ def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
                         calls_made += 1
         else:
             calls = json_dict[sample_id]["lineage_calls"].get(lineage, {})
+
             for probe_id, probe_data in calls.items():
                 genotype = probe_data.get("genotype")
                 if genotype == [0, 0]:
@@ -54,9 +57,17 @@ def get_json_file_paths(json_directory_path):
     return json_list
 
 def create_and_write_table(full_dictionary):
+    data = []
     for sample_id, lineages in full_dictionary.items():
         for lineage, stats in lineages.items():
-            print(f"Sample {sample_id} found {stats['calls_made']} SNP's to support lineage {lineage}, out of a total possible of {stats['possible_calls']}")
+            data.append({
+                "Sample ID": sample_id,
+                "Lineage": lineage,
+                "Calls Made": stats.get("calls_made", 0),
+                "Possible Calls": stats.get("possible_calls", 0)
+            })
+    pandas_table = pd.DataFrame(data)
+    print(pandas_table)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -100,9 +111,17 @@ if __name__ == "__main__":
 
 """ 
    single_sample_dictionary_full = {
-        sample_id{
+        ERR9768236{
             TPE.1.1"{
-                calls_made:0,possible_calls:0
+                calls_made:743,possible_calls:892
+            }
+            TPE.1.3{
+                calls_made:5,possible_calls:90
+            }
+        }
+        SRR14277265{
+            TPE.1.1"{
+                calls_made:1,possible_calls:3
             }
             TPE.1.3{
                 calls_made:0,possible_calls:0
