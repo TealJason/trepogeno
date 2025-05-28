@@ -4,6 +4,25 @@ The outputs from the make-probes command are used for lineage calling with `mykr
 These scripts require a vcf and the .pinecone.bootstrap.table.csv from rPinecone which has clusters and lineage cluster assignments against samples.  
 Whith these the scripts can work out which snps define a lineage my checking which snps are present in all members of a lineage cluster while being absent from all other samples.
 
+# create_probes.sh
+## Function:
+This is a bash script that will execute the below two scripts in order and will then run mykrobe make-probes automatically, this is offered as a streamlined way to process the files and create mykrobe probes and lineage file for calling.
+The script require a path to the vcf, path to the pinecone clusters file, pinecone threshold number, and a path to the reference fasta of the same sample used in the vcf. 
+
+### Argument Example
+./create_probes.sh  
+-v /data/pam/team230/jb71/scratch/NextStrain/files/2025-01-31_masked_snps.vcf  
+-c /data/pam/team230/jb71/scratch/NextStrain/rPinecone/Results/rPineCone20-5.pinecone.bootstrap.table.csv  
+-p 95  
+-r /data/pam/team230/jb71/scratch/NextStrain/files/reference/NC/nc_021508.fasta  
+
+### Output
+lineage_defining_snps.csv (see below).  
+lineage_coordinate_output.txt (see below).  
+test_probes.fa (mykrobe probes file used for lineage calling).  
+lineage95.json (mykrobe lineage fine used for lineage calling).  
+
+
 # create_matrix_get_lineage_defining_snps.py.py:
 ## Function:
 This script creates a 'snp matrix' from a vcf file where genomic positions are the columns while the index column are samples.

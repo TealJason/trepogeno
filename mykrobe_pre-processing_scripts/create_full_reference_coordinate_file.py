@@ -10,7 +10,7 @@ def parse_args():
     parser.add_argument("--lineage_defining_snps", type=Path, required=True, help="Path to lineage defining snps file")
     parser.add_argument("--cluster_file", type=Path, required=True, help="Path to full rPinecone table (with Sub-lineage info)")
     parser.add_argument("--pinecone_threshold", type=int, default=50, help="Pinecone threshold (default=50) ")
-    parser.add_argument("--output", type=Path, default="./lineage_coordinate_output.tsv", help="Output path for Mykrobe panel")
+    parser.add_argument("--output", type=Path, default="lineage_coordinate_output.tsv", help="Output path for Mykrobe panel")
     args = parser.parse_args()
     return args
 
