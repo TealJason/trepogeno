@@ -25,9 +25,9 @@ def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
             for sublineage, probes in calls.items():
                 for probe_id, probe_data in probes.items():
                     genotype = probe_data.get("genotype")
-                    if genotype == [0, 0] or genotype ==[1, 0] or genotype == [0, 1]:
+                    if genotype == [0, 0]:
                         possible_calls += 1
-                    elif genotype == [1, 1]:
+                    elif genotype == [1, 1] or genotype == [0, 1]:
                         possible_calls += 1
                         calls_made += 1
         else:
@@ -35,9 +35,9 @@ def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
 
             for probe_id, probe_data in calls.items():
                 genotype = probe_data.get("genotype")
-                if genotype == [0, 0] or genotype ==[1, 0] or genotype == [0, 1]:
+                if genotype == [0, 0]:
                     possible_calls += 1
-                elif genotype == [1, 1]:
+                elif genotype == [1, 1] or genotype == [0, 1]:
                     possible_calls += 1
                     calls_made += 1
 
