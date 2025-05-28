@@ -7,8 +7,8 @@ This script is made for the purpose of collecting the json files produced by myk
 python3 tabulate_json.py --json_directory /path/to/json/files/directory/ --check_all
 
 #### Internal
-This nested dictionary structure is created internally during procesing. 
-Each json file is a top level key with each containing sets of dictionaries for each lineage that had support
+This nested dictionary structure is created internally during procesing.  
+Each json file is a top level key with each containing sets of dictionaries for each lineage that had support. 
 If the flag --check_all is set the script creates a dictionary and checks how many snps were called for every lineage not just the lineages  with support
 ```
    single_sample_dictionary_full = { 
@@ -35,9 +35,11 @@ If the flag --check_all is set the script creates a dictionary and checks how ma
 ### Output
 
 Simple table:
+```
 
 Sample_id   |Lineage |Calls made |Possible calls| 
 ----------- |--------|-----------|--------------|
 SRR14277265 |TPE     |  33       |      42      |     
 ----------- |--------|-----------|--------------|
 ERR9768236  |TPE.3.1 |  30       |      38      |
+```
