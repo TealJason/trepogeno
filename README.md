@@ -25,4 +25,8 @@ This subdirectory contains scripts and information for tabulating and concatenat
 
 ## example command to create probes and lineage files
 
-python -m nextstrain.genotreponema --json_directory files/json_outputs --reference_coordinate files/Tpallidum_Mykrobe_input.SNP.table_all_hierarchies_2025-05-14.tsv --genomic_reference files/reference/nc_021508.fasta.gz --probe_and_lineage_dir files/probes --lineage_file
+python -m nextstrain.genotreponema --json_directory files/json_outputs --reference_coordinate files/Tpallidum_Mykrobe_input.SNP.table_all_hierarchies_2025-05-14.tsv --genomic_reference files/reference/nc_021508.fasta.gz --probe_and_lineage_dir files/probes --make_probes
+
+## example command to call a lineage on a single fastq
+
+python -m nextstrain.genotreponema --json_directory files/json_outputs --reference_coordinate files/Tpallidum_Mykrobe_input.SNP.table_all_hierarchies_2025-05-14.tsv --genomic_reference files/reference/nc_021508.fasta.gz --probe_and_lineage_dir files/probes --lineage_call
