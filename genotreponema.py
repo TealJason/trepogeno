@@ -32,6 +32,18 @@ def parse_arguments():
     )
 
     parser.add_argument(
+        "--make_probes",
+        help="Provide this flag to create a new set of probes before running the lineage calling",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--tabulate_jsons",
+        help="Provide this flag to create a new set of probes before running the lineage calling",
+        action="store_true",
+    )
+
+    parser.add_argument(
         "--lineage_call",
         help="Provide this flag to create a new set of probes before running the lineage calling",
         action="store_true",
@@ -93,13 +105,15 @@ def concatenate_and_read_json(json_directory,check_all):
 def main():
     args = parse_arguments()
 
-    if args.lineage_call: 
+    if args.make_probes: 
         lineage_directory = args.probe_and_lineage_dir + "/lineage.json"
         create_probes_from_type_scheme(lineage_directory, args.reference_coordinate, args.genomic_reference, args.probe_and_lineage_dir)
 
-    #run_lineage_call(args.probe_directory)
+    if ars.lineage_call
+        run_lineage_call(args.probe_directory)
 
-    #concatenate_and_read_json(args.json_directory,args.check_all)
+    if args.tabulate_jsons:
+        concatenate_and_read_json(args.json_directory,args.check_all)
 
 if __name__ == "__main__":
     main()
