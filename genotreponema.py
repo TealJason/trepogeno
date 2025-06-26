@@ -76,8 +76,6 @@ def parse_arguments():
         default="./",
     )
 
-
-
     args = parser.parse_args()
     if args.json_directory is None or args.reference_coordinate is None:
         parser.error("The json_directory was not found or provided correctly.")
@@ -86,7 +84,6 @@ def parse_arguments():
 
 def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir):
     create_probes(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir)
-
 
 def run_lineage_call(probe_directory):
     run_mykrobe_lineage_call(probe_directory)
