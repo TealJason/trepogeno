@@ -39,8 +39,13 @@ def parse_arguments():
         default=False
     )
 
+    parser.add_argument(
+        "--reference_coordinate",
+        help="The reference coordinate file mapping snps and lineages to genomic positions",
+    )    
+
     args = parser.parse_args()
-    if args.json_directory is None:
+    if args.json_directory is None or args.reference_coordinate is None:
         parser.error("The json_directory was not found or provided correctly.")
         exit(1)
     return args
