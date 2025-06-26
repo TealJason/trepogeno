@@ -33,19 +33,19 @@ def parse_arguments():
 
     parser.add_argument(
         "--make_probes",
-        help="Provide this flag to create a new set of probes before running the lineage calling",
+        help="Provide this flag if you want to create a new set of probes before running the lineage calling",
         action="store_true",
     )
 
     parser.add_argument(
         "--tabulate_jsons",
-        help="Provide this flag to create a new set of probes before running the lineage calling",
+        help="Provide this flag to if you want to tabulate the json outputs produced by mykrobe",
         action="store_true",
     )
 
     parser.add_argument(
         "--lineage_call",
-        help="Provide this flag to create a new set of probes before running the lineage calling",
+        help="Provide this flag to preform the custom lineage calling with mykrobe",
         action="store_true",
     )
 
