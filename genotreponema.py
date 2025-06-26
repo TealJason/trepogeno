@@ -9,7 +9,7 @@ import numpy as np
 import logging
 import sys
 
-#Custom functions
+#custom functions
 from nextstrain.lineage_calling.tabulate_json import get_all_lineage_calls_for_one_sample, get_json_file_paths, create_and_write_table
 from nextstrain.create_probes.create_probes import create_probes
 from nextstrain.lineage_calling.run_mykrobe_lineage_calling import check_lineage_file, run_mykrobe_lineage_call
@@ -20,8 +20,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "--json_directory",
-        help="Path to the directory con
-        taining the .json files",
+        help="Path to the directory in which to save and read the mykrobe .json files",
         type=Path
     )
 
@@ -34,15 +33,44 @@ def parse_arguments():
 
     parser.add_argument(
         "--lineage_file",
-        help="If provided will create a new set of probes before running the lineage calling",
+        help="Provide this flag to create a new set of probes before running the lineage calling",
         action="store_true",
-        default=False
+        default="lineage.json"
     )
 
     parser.add_argument(
         "--reference_coordinate",
         help="The reference coordinate file mapping snps and lineages to genomic positions",
-    )    
+    )
+
+    parser.add_argument(
+        "--genomic_reference",
+        help="The genomic reference fasta",
+    )
+
+    parser.add_argument(
+        "--seq",
+        help="the sequence you wish to call lineages on",
+    )
+
+    parser.add_argument(
+        "--seq_directory_manifest",
+        help="If you want to call preform back to back lineage calls you can provide a manifest of reads for which lineage calls will be preformed",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--json_out",
+        help="The directory in which to output the lineage call json files",
+    )
+
+    parser.add_argument(
+        "--probe_and_lineage_dir",
+        help="The directory in which to save the probe and lineage files if being regenerated and or the location in which the probe and lineage file can be found for lineage calling",
+        deafult="./",
+    )
+
+
 
     args = parser.parse_args()
     if args.json_directory is None or args.reference_coordinate is None:
@@ -50,33 +78,32 @@ def parse_arguments():
         exit(1)
     return args
 
-def create_probes_from_type_scheme(lineage_file):
-    create_probes_from_type_scheme()
+def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_reference):
+    create_probes(lineage_file,reference_coordinate,genomic_reference)
 
 
-def run_mykrobe():
+def run_lineage_call():
     check_lineage_file()
-    run_mykrobe()
 
-def concatonate_and_read_json():
-    json_list = get_json_file_paths(args.json_directory)
+def concatonate_and_read_json(json_directory,check_all):
+    json_list = get_json_file_paths(json_directory)
 
     full_dictionary = {}
     for path in json_list:
         with open(path) as json_path:
             json_dict = json.load(json_path)
-            full_dictionary = get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,args.check_all)
+            full_dictionary = get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all)
 
-    create_and_write_table(full_dictionary,args.check_all)
+    create_and_write_table(full_dictionary,check_all)
 
 def main():
     args = parse_arguments()
 
-    if lineage_file create_probes_from_type_scheme(args.lineage_file)
+    if args.lineage_file: create_probes_from_type_scheme(args.lineage_file,args.reference_coordinate,args.genomic_reference)
 
-    run_mykrobe(probe_directory)
+    run_lineage_call(args.probe_directory)
 
-    concatonate_and_read_json(args)
+    concatonate_and_read_json(args.json_directory,args.check_all)
 
 if __name__ == "__main__":
     main()
