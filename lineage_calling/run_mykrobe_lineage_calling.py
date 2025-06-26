@@ -1,24 +1,7 @@
-import json
-import argparse
-from pathlib import Path
-import pandas as pd
-from typing import Dict, List
-from collections import defaultdict
-from Bio import SeqIO
-import numpy as np
-import logging
-import sys
-
  
-def check_lineage_file():
-    pass
+def check_lineage_file(probe_directory):
+    print(f"check_lineage_file at {probe_directory}/lineage.json")
 
-def run_mykrobe_lineage_call():
-    pass
+def run_mykrobe_lineage_call(probe_directory):
+    check_lineage_file(probe_directory)
 
-def main():
- check_lineage_file()
- run_mykrobe()
-
-if __name__ == "__main__":
-    main()

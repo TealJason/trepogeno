@@ -12,7 +12,7 @@ import sys
 #custom functions
 from nextstrain.lineage_calling.tabulate_json import get_all_lineage_calls_for_one_sample, get_json_file_paths, create_and_write_table
 from nextstrain.create_probes.create_probes import create_probes
-from nextstrain.lineage_calling.run_mykrobe_lineage_calling import check_lineage_file, run_mykrobe_lineage_call
+from nextstrain.lineage_calling.run_mykrobe_lineage_calling import run_mykrobe_lineage_call
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -89,7 +89,7 @@ def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_ref
 
 
 def run_lineage_call(probe_directory):
-    check_lineage_file()
+    run_mykrobe_lineage_call(probe_directory,)
 
 def concatenate_and_read_json(json_directory,check_all):
     json_list = get_json_file_paths(json_directory)
