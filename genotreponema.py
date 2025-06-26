@@ -89,7 +89,7 @@ def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_ref
 
 
 def run_lineage_call(probe_directory):
-    run_mykrobe_lineage_call(probe_directory,)
+    run_mykrobe_lineage_call(probe_directory)
 
 def concatenate_and_read_json(json_directory,check_all):
     json_list = get_json_file_paths(json_directory)
@@ -109,8 +109,8 @@ def main():
         lineage_directory = args.probe_and_lineage_dir + "/lineage.json"
         create_probes_from_type_scheme(lineage_directory, args.reference_coordinate, args.genomic_reference, args.probe_and_lineage_dir)
 
-    if ars.lineage_call
-        run_lineage_call(args.probe_directory)
+    if args.lineage_call:
+        run_lineage_call(args.probe_and_lineage_dir)
 
     if args.tabulate_jsons:
         concatenate_and_read_json(args.json_directory,args.check_all)
