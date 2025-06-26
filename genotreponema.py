@@ -102,9 +102,9 @@ def main():
         lineage_file = "lineage.json"
         create_probes_from_type_scheme(lineage_file,args.reference_coordinate,args.genomic_reference)
 
-    run_lineage_call(args.probe_directory)
+    #run_lineage_call(args.probe_directory)
 
-    concatenate_and_read_json(args.json_directory,args.check_all)
+    #concatenate_and_read_json(args.json_directory,args.check_all)
 
 if __name__ == "__main__":
     main()

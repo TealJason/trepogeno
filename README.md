@@ -4,7 +4,7 @@ To set up functionality you must:
 1. cd ..
 2. git clone mykrobe/
 3.cd mykrobe
-4. pip install -e
+4. pip install -e .
 5. cd. ../nextstrain
 
 
@@ -22,3 +22,7 @@ This subdirectory contains scripts that will take a vcf and a lineage cluster cs
 
 ## mykrobe_post_processing_scripts
 This subdirectory contains scripts and information for tabulating and concatenating important information from the the output json files created by mykrobe 
+
+## example command to create probes and lineage files
+
+python -m nextstrain.genotreponema --json_directory files/json_outputs --reference_coordinate files/Tpallidum_Mykrobe_input.SNP.table_all_hierarchies_2025-05-14.tsv --genomic_reference files/reference/nc_021508.fasta.gz --probe_and_lineage_dir files/probes --lineage_file
