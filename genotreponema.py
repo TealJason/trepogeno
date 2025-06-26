@@ -32,7 +32,7 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--lineage_file",
+        "--lineage_call",
         help="Provide this flag to create a new set of probes before running the lineage calling",
         action="store_true",
     )
@@ -59,11 +59,6 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--json_out",
-        help="The directory in which to output the lineage call json files",
-    )
-
-    parser.add_argument(
         "--probe_and_lineage_dir",
         help="The directory in which to save the probe and lineage files if being regenerated and or the location in which the probe and lineage file can be found for lineage calling",
         default="./",
@@ -77,8 +72,8 @@ def parse_arguments():
         exit(1)
     return args
 
-def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_reference):
-    create_probes(lineage_file,reference_coordinate,genomic_reference)
+def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir):
+    create_probes(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir)
 
 
 def run_lineage_call(probe_directory):
@@ -98,9 +93,9 @@ def concatenate_and_read_json(json_directory,check_all):
 def main():
     args = parse_arguments()
 
-    if args.lineage_file: 
-        lineage_file = "lineage.json"
-        create_probes_from_type_scheme(lineage_file,args.reference_coordinate,args.genomic_reference)
+    if args.lineage_call: 
+        lineage_directory = args.probe_and_lineage_dir + "/lineage.json"
+        create_probes_from_type_scheme(lineage_directory, args.reference_coordinate, args.genomic_reference, args.probe_and_lineage_dir)
 
     #run_lineage_call(args.probe_directory)
 
