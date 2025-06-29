@@ -56,12 +56,7 @@ def parse_arguments():
 
     parser.add_argument(
         "--genomic_reference",
-        help="The genomic reference fasta",
-    )
-
-    parser.add_argument(
-        "--seq",
-        help="the sequence you wish to call lineages on",
+        help="The path to the genomic reference fasta",
     )
 
     parser.add_argument(
