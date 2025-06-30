@@ -8,11 +8,11 @@ To set up functionality you must:
 5. cd. ../nextstrain
 
 
-## genotreponeme
-this is the main script, call it with genotreponema.py and provide the relevent arguments
+## Genotreponema
+This is the main script, call it with python -m nextstrain.genotreponema and provide the relevent arguments
 
 ## create_probes
-The scripts to impoar and make the correct calls to create mykrobe to create the k-mer probes
+The scripts to imports and make the correct calls to mykrobe to create the k-mer probes
 
 ## lineage_calling
 The scripts to import and make the correct calls to mykrobe for lineage_calling

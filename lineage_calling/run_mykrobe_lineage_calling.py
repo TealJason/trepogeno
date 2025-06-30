@@ -1,5 +1,4 @@
 from types import SimpleNamespace as Namespace  
-
 from  mykrobe.cmds.amr import run as run_lineage_call
 
 def check_lineage_file(probe_directory,):
@@ -17,6 +16,8 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
         for line in manifest:
             if not line.strip():
                 continue  # Skip empty lines
+            if line.startswith("#"):
+                continue
             
             ID, sequence1, sequence2 = get_sequence(line)
             sequences = [sequence1]
