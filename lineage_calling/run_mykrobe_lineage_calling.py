@@ -27,7 +27,7 @@ def run_mykrobe_lineage_call(probe_directory, sequence_manifest,json_directory):
                 sequences.append(sequence2)
 
             args = Namespace(
-                custom_probe_set_path=probe_directory,
+                custom_probe_set_path=f"{probe_directory}/probes.fa",
                 species="custom",
                 report_all_calls=True,
                 tmp=None,
