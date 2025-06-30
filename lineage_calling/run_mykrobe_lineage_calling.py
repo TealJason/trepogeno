@@ -1,6 +1,4 @@
 from types import SimpleNamespace as Namespace  
-import os
-from contextlib import redirect_stdout
 
 from  mykrobe.cmds.amr import run as run_lineage_call
 
@@ -55,7 +53,7 @@ def run_mykrobe_lineage_call(probe_directory, sequence_manifest,json_directory):
                 expected_error_rate=0.05,
                 guess_sequence_method=False,
                 output_format="json",
-                output=f"{json_directory}/{ID}"
+                output=f"{json_directory}/{ID}.json"
             )
 
             run_lineage_call(None, args)

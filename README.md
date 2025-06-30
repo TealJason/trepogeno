@@ -30,3 +30,6 @@ python -m nextstrain.genotreponema --json_directory files/json_outputs --referen
 ## example command to call a lineage
 
 python -m nextstrain.genotreponema --json_directory files/json_outputs --genomic_reference files/reference/nc_021508.fasta --probe_and_lineage_dir files/probes --lineage_call --seq_manifest /data/pam/team230/jb71/scratch/nexstrain/manifest.csv
+
+## example command to call process and summarise the mykrobe json outputs
+python -m nextstrain.genotreponema --json_directory files/json_outputs --tabulate_jsons 

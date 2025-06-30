@@ -1,16 +1,9 @@
-import json
 import argparse
 from pathlib import Path
-import pandas as pd
-from typing import Dict, List
-from collections import defaultdict
-from Bio import SeqIO
-import numpy as np
 import logging
-import sys
 
 #custom functions
-from post_process_json.tabulate_json import get_all_lineage_calls_for_one_sample, get_json_file_paths, create_and_write_table
+from post_process_json.tabulate_json import run_tabulate_json
 from nextstrain.create_probes.create_probes import create_probes
 from nextstrain.lineage_calling.run_mykrobe_lineage_calling import run_mykrobe_lineage_call
 
@@ -83,16 +76,8 @@ def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_ref
 def run_lineage_call(probe_directory,sequence_manifest,json_directory):
     run_mykrobe_lineage_call(probe_directory,sequence_manifest,json_directory)
 
-def concatenate_and_read_json(json_directory,check_all):
-    json_list = get_json_file_paths(json_directory)
-
-    full_dictionary = {}
-    for path in json_list:
-        with open(path) as json_path:
-            json_dict = json.load(json_path)
-            full_dictionary = get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all)
-
-    create_and_write_table(full_dictionary,check_all)
+def concatenate_and_read_json(json_directory,check_all = True):
+    run_tabulate_json(json_directory,check_all)
 
 def main():
     args = parse_arguments()
