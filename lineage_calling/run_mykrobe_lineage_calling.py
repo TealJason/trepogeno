@@ -11,7 +11,7 @@ def get_sequence(line):
     ID, sequence1, sequence2 = line.strip().split(",")
     return ID, sequence1, sequence2
 
-def run_mykrobe_lineage_call(probe_directory, sequence_manifest):
+def run_mykrobe_lineage_call(probe_directory, sequence_manifest,json_directory):
     check_lineage_file(probe_directory)
 
     with open(sequence_manifest, "r") as manifest:
@@ -51,7 +51,11 @@ def run_mykrobe_lineage_call(probe_directory, sequence_manifest):
                 keep_tmp=False,
                 ncbi_names=None,
                 custom_variant_to_resistance_json=None,
-                custom_lineage_json=None
+                custom_lineage_json=None,
+                expected_error_rate=0.05,
+                guess_sequence_method=False,
+                output_format="json",
+                output=f"{json_directory}/{ID}"
             )
 
             run_lineage_call(None, args)
