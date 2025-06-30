@@ -10,7 +10,7 @@ import logging
 import sys
 
 #custom functions
-from nextstrain.lineage_calling.tabulate_json import get_all_lineage_calls_for_one_sample, get_json_file_paths, create_and_write_table
+from post_process_json.tabulate_json import get_all_lineage_calls_for_one_sample, get_json_file_paths, create_and_write_table
 from nextstrain.create_probes.create_probes import create_probes
 from nextstrain.lineage_calling.run_mykrobe_lineage_calling import run_mykrobe_lineage_call
 
@@ -26,7 +26,7 @@ def parse_arguments():
 
     parser.add_argument(
         "--check_all",
-        help="If provided, the script will check how much support was found for all lineages. Omit to check only called lineages.",
+        help="If provided, the script will check how much support was found for all lineages. Omit to check only the support for lineages called by mykrobe.",
         action="store_true",
         default=False
     )
@@ -60,9 +60,9 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--seq_directory_manifest",
+        "--seq_manifest",
         help="If you want to call preform back to back lineage calls you can provide a manifest of reads for which lineage calls will be preformed",
-        action="store_true",
+        type=Path,
     )
 
     parser.add_argument(
@@ -72,7 +72,7 @@ def parse_arguments():
     )
 
     args = parser.parse_args()
-    if args.json_directory is None or args.reference_coordinate is None:
+    if args.json_directory is None:
         parser.error("The json_directory was not found or provided correctly.")
         exit(1)
     return args
@@ -80,8 +80,8 @@ def parse_arguments():
 def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir):
     create_probes(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir)
 
-def run_lineage_call(probe_directory):
-    run_mykrobe_lineage_call(probe_directory)
+def run_lineage_call(probe_directory,sequence_manifest):
+    run_mykrobe_lineage_call(probe_directory,sequence_manifest)
 
 def concatenate_and_read_json(json_directory,check_all):
     json_list = get_json_file_paths(json_directory)
@@ -102,7 +102,7 @@ def main():
         create_probes_from_type_scheme(lineage_directory, args.reference_coordinate, args.genomic_reference, args.probe_and_lineage_dir)
 
     if args.lineage_call:
-        run_lineage_call(args.probe_and_lineage_dir)
+        run_lineage_call(args.probe_and_lineage_dir,args.seq_manifest)
 
     if args.tabulate_jsons:
         concatenate_and_read_json(args.json_directory,args.check_all)
