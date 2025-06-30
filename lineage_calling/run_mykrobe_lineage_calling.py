@@ -40,7 +40,7 @@ def run_mykrobe_lineage_call(probe_directory, sequence_manifest,json_directory):
                 filters=["MISSING_WT", "LOW_PERCENT_COVERAGE", "LOW_GT_CONF", "LOW_TOTAL_DEPTH"],
                 min_variant_conf=150,
                 min_gene_conf=1,
-                model="median_depth",
+                model="kmer_count",
                 min_proportion_expected_depth=0.3,
                 ploidy="diploid",
                 conf_percent_cutoff=100,
