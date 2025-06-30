@@ -6,10 +6,12 @@ import pandas as pd
 def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
     keys = list(json_dict)
     sample_id = keys[0]
+    check_all = True
     if check_all == False:
         lineage_list = json_dict[sample_id]["phylogenetics"]["lineage"]["lineage"]
     else:
         lineage_list = list(json_dict[sample_id]["lineage_calls"])
+        
 
     single_sample_dictionary_full = {
         sample_id: {}
