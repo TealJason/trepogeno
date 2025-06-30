@@ -3,7 +3,7 @@ from pathlib import Path
 import logging
 
 #custom functions
-from post_process_json.tabulate_json import run_tabulate_json
+from nextstrain.post_process_json.tabulate_json import run_tabulate_json
 from nextstrain.create_probes.create_probes import create_probes
 from nextstrain.lineage_calling.run_mykrobe_lineage_calling import run_mykrobe_lineage_call
 
