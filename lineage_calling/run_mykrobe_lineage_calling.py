@@ -18,7 +18,7 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
                 continue  # Skip empty lines
             if line.startswith("#"):
                 continue
-            
+
             ID, sequence1, sequence2 = get_sequence(line)
             sequences = [sequence1]
             if sequence2:
@@ -26,34 +26,35 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
 
             args = Namespace(
                 custom_probe_set_path=f"{probe_json_directory}/probes.fa",
+                custom_lineage_json=f"{probe_json_directory}/lineage.json",
                 species="custom",
                 report_all_calls=True,
+                sample=ID,
+                output_format="json",
+                output=f"{json_directory}/{ID}.json",
+                seq=sequences,
+
                 tmp=None,
                 ont=False,
-                seq=sequences,
                 kmer=21,
                 force=False,
                 threads=2,
                 skeleton_dir="data/skeletons/",
                 memory="1GB",
-                sample=ID,
                 filters=[],
                 min_variant_conf=100,
                 min_gene_conf=1,
                 model="kmer_count",
                 min_proportion_expected_depth=0.3,
-                ploidy="diploid",
+                ploidy="haploid",
                 conf_percent_cutoff=100,
                 min_depth=1,
                 ignore_minor_calls=False,
                 keep_tmp=False,
                 ncbi_names=None,
                 custom_variant_to_resistance_json=None,
-                custom_lineage_json=f"{probe_json_directory}/lineage.json",
                 expected_error_rate=0.05,
-                guess_sequence_method=False,
-                output_format="json",
-                output=f"{json_directory}/{ID}.json"
+                guess_sequence_method=False
             )
 
             run_lineage_call(None, args)

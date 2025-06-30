@@ -7,7 +7,6 @@ To set up functionality you must:
 4. pip3 install . && mykrobe panels update_metadata && mykrobe panels update_species all
 5. cd. ../nextstrain
 
-
 ## Genotreponema
 This is the main script, call it with python -m nextstrain.genotreponema and provide the relevent arguments
 
