@@ -3,6 +3,8 @@ import argparse
 from pathlib import Path
 import pandas as pd
 
+from nextstrain.post_process_json.style import style_html
+
 def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
     keys = list(json_dict)
     sample_id = keys[0]
@@ -79,7 +81,7 @@ def filter_to_single_rows(call_summary_table):
     call_summary_supported_best.to_csv("best_lineages_from_all.csv", index=False)
     print(call_summary_supported_best)
 
-def create_and_write_table(full_dictionary,all_checked):
+def create_and_write_table(full_dictionary, all_checked):
     data = []
     for sample_id, lineages in full_dictionary.items():
         for lineage, stats in lineages.items():
@@ -88,16 +90,24 @@ def create_and_write_table(full_dictionary,all_checked):
                 "Lineage": lineage,
                 "Calls Made": stats.get("calls_made", 0),
                 "Possible Calls": stats.get("possible_calls", 0),
-                "Total support": stats.get("total_support",0)
+                "Total support": stats.get("total_support", 0)
             })
 
     call_summary_table = pd.DataFrame(data)
-    if all_checked == True:
-        call_summary_table.to_csv("./snps_called_all.csv",index=False)
+
+    if all_checked:
+        csv_path = "./snps_called_all.csv"
+        html_path = "./snps_called_all.html"
+        call_summary_table.to_csv(csv_path, index=False)
+        call_summary_table.to_html(html_path, index=False)
         filter_to_single_rows(call_summary_table)
     else:
-        call_summary_table.to_csv("./snps_called.csv",index= False)
-    print(call_summary_table)
+        csv_path = "./snps_called.csv"
+        html_path = "./snps_called.html"
+        call_summary_table.to_csv(csv_path, index=False)
+        call_summary_table.to_html(html_path, index=False)
+
+    style_html(html_path)
 
 def run_tabulate_json(json_directory, check_all):
     json_list = get_json_file_paths(json_directory)
