@@ -70,8 +70,8 @@ def parse_arguments():
         exit(1)
     return args
 
-def create_probes_from_type_scheme(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir):
-    create_probes(lineage_file,reference_coordinate,genomic_reference,probe_and_lineage_dir)
+def create_probes_from_type_scheme(lineage_directory,reference_coordinate,genomic_reference,probe_and_lineage_dir):
+    create_probes(lineage_directory,reference_coordinate,genomic_reference,probe_and_lineage_dir)
 
 def run_lineage_call(probe_directory,sequence_manifest,json_directory):
     run_mykrobe_lineage_call(probe_directory,sequence_manifest,json_directory)

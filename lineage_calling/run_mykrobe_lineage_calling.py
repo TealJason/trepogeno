@@ -16,8 +16,8 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
         for line in manifest:
             if not line.strip():
                 continue  # Skip empty lines
-            if line.startswith("#"):
-                continue
+            if line.startswith("#"): # skip comments
+                  continue
 
             ID, sequence1, sequence2 = get_sequence(line)
             sequences = [sequence1]
@@ -34,19 +34,19 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
                 output=f"{json_directory}/{ID}.json",
                 seq=sequences,
 
-                tmp=None,
+                tmp=None, #this tmp variable and below are mocked to defaults, above are set based on input arguments
                 ont=False,
                 kmer=21,
                 force=False,
                 threads=2,
-                skeleton_dir="data/skeletons/",
+                skeleton_dir="mykrobe/data/skeletons/",
                 memory="1GB",
-                filters=[],
-                min_variant_conf=100,
+                filters=['MISSING_WT', 'LOW_PERCENT_COVERAGE', 'LOW_GT_CONF', 'LOW_TOTAL_DEPTH'],
+                min_variant_conf=150,
                 min_gene_conf=1,
                 model="kmer_count",
                 min_proportion_expected_depth=0.3,
-                ploidy="haploid",
+                ploidy="diploid",
                 conf_percent_cutoff=100,
                 min_depth=1,
                 ignore_minor_calls=False,
@@ -54,7 +54,11 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
                 ncbi_names=None,
                 custom_variant_to_resistance_json=None,
                 expected_error_rate=0.05,
-                guess_sequence_method=False
+                guess_sequence_method=False,
+                ctx=None,
+                ignore_filtered=False,
+                dump_species_covgs=None,
+                min_gene_percent_covg_threshold=100
             )
 
             run_lineage_call(None, args)
