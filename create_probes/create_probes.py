@@ -4,7 +4,8 @@ import os
 from contextlib import redirect_stdout
 
 #mykrobe functions
-from mykrobe.cmds.makeprobes import run as run_make_variant_probes
+from nextstrain.mykrobe.src.mykrobe.cmds.makeprobes import run as run_make_variant_probes
+
 def create_probes(lineage,reference_coordinate_filepath, reference_filepath,probe_and_lineage_dir):
     args = Namespace(
         no_backgrounds=True,

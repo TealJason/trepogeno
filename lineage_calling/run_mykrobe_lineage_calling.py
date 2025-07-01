@@ -1,5 +1,5 @@
 from types import SimpleNamespace as Namespace  
-from  mykrobe.cmds.amr import run as run_lineage_call
+from  nextstrain.mykrobe.src.mykrobe.cmds.amr import run as run_lineage_call
 
 def check_lineage_file(probe_directory,):
     print(f"check_lineage_file at {probe_directory}/lineage.json")
