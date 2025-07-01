@@ -7,7 +7,7 @@ To set up functionality you must:
 4. pip3 install . && mykrobe panels update_metadata && mykrobe panels update_species all
 5. cd. ../nextstrain
 
-If having problems with cannot find "mccortex31" expected to find it at "path/mccortex31" try the below
+If you experience problems with 'cannot find mccortex31 expected to find it at path/mccortex31' try the below
 
 1. cd mykrobe
 2. git clone --recursive -b geno_kmer_count https://github.com/Mykrobe-tools/mccortex mccortex
