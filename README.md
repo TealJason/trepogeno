@@ -3,24 +3,24 @@ This repo contains scripts that intend to wrap around mykrobe for eventual linea
 To set up functionality you must: 
 1. cd ..
 2. git clone mykrobe/
-3.cd mykrobe
+3. cd mykrobe
 4. pip3 install . && mykrobe panels update_metadata && mykrobe panels update_species all
 5. cd. ../nextstrain
+
+If having problems with cannot find "mccortex31" expected to find it at "path/mccortex31" try the below
+
+1. cd mykrobe
+2. git clone --recursive -b geno_kmer_count https://github.com/Mykrobe-tools/mccortex mccortex
+3. cd mccortex
+4. make
+5. cp bin/mccortex31 /path/mykrobe/expected/
 
 ## Genotreponema
 This is the main script, call it with python -m nextstrain.genotreponema and provide the relevent arguments
 
-## create_probes
-The scripts to imports and make the correct calls to mykrobe to create the k-mer probes
-
-## lineage_calling
-The scripts to import and make the correct calls to mykrobe for lineage_calling
-
-## mykrobe_pre-processing_scripts
-This subdirectory contains scripts that will take a vcf and a lineage cluster csv from pinecone to produce a file suitable for creating a probes and lineage.json with mykrobe.
-
-## mykrobe_post_processing_scripts
-This subdirectory contains scripts and information for tabulating and concatenating important information from the the output json files created by mykrobe 
+## create_typing_scheme
+This subdirectory contains scripts that with a vcf and reference could be used to semi-automate the process of screating a 
+typing scheme for later probe creation and lineage file creation for lineage calling.
 
 ## example command to create probes and lineage files
 

@@ -1,3 +1,8 @@
+# THESE SCRIPTS ARE STANDALONE FROM THE MAIN WORK FLOW
+# The following scripts are _one_ way you can make a lineage_coordinate/typing-scheme file required by mykrobe
+# There is a premade tpying scheme in the main repo you can use  
+# This describes one method in which to produce similar scheme should you have a vcf you wish to use
+
 This repo contains  scripts for creating a basic coordinate-file with lineages for mykrobes lineage calling.  
 Mykrobe requires the output from create_full_reference_coordinate_file to make its probes.fa and lineage.json files via the `mykrobe variants make-probes` command.  
 The outputs from the make-probes command are used for lineage calling with `mykrobe predict`.  
