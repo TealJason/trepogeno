@@ -1,22 +1,35 @@
-   
 def style_html(html_path):
- # Inject filter UI and JS into the HTML file
+    # Inject filter UI and JS into the HTML file
     filter_html = """
     <label for="supportFilter">Filter by Total support (≥ %): </label>
     <input type="number" id="supportFilter" value="0" min="0" max="100" step="1" />
+
+    <label for="sampleFilter" style="margin-left: 20px;">Filter by Sample ID: </label>
+    <input type="text" id="sampleFilter" placeholder="Enter Sample ID" />
+
     <button onclick="filterTable()">Apply Filter</button>
 
     <script>
     function filterTable() {
-        const input = document.getElementById("supportFilter");
-        const filter = parseFloat(input.value) || 0;
+        const supportInput = document.getElementById("supportFilter");
+        const sampleInput = document.getElementById("sampleFilter");
+        const supportFilter = parseFloat(supportInput.value) || 0;
+        const sampleFilter = sampleInput.value.toLowerCase();
+
         const table = document.querySelector("table");
         const rows = table.querySelectorAll("tbody tr");
 
         rows.forEach(row => {
-            const supportCell = row.cells[4];  // 5th column: Total support
+            const supportCell = row.cells[4];  // "Total support"
+            const sampleCell = row.cells[0];   // "Sample ID"
+
             const supportValue = parseFloat(supportCell.textContent);
-            if (supportValue >= filter) {
+            const sampleID = sampleCell.textContent.toLowerCase();
+
+            const supportCondition = supportValue >= supportFilter;
+            const sampleCondition = sampleID.includes(sampleFilter);
+
+            if (supportCondition && sampleCondition) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
