@@ -18,13 +18,6 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--check_all",
-        help="If provided, the script will check how much support was found for all lineages. Omit to check only the support for lineages called by mykrobe.",
-        action="store_true",
-        default=False
-    )
-
-    parser.add_argument(
         "--make_probes",
         help="Provide this flag if you want to create a new set of probes before running the lineage calling",
         action="store_true",
@@ -76,8 +69,8 @@ def create_probes_from_type_scheme(lineage_directory,reference_coordinate,genomi
 def run_lineage_call(probe_directory,sequence_manifest,json_directory):
     run_mykrobe_lineage_call(probe_directory,sequence_manifest,json_directory)
 
-def concatenate_and_read_json(json_directory,check_all = True):
-    run_tabulate_json(json_directory,check_all)
+def concatenate_and_read_json(json_directory):
+    run_tabulate_json(json_directory)
 
 def main():
     args = parse_arguments()
@@ -90,7 +83,7 @@ def main():
         run_lineage_call(args.probe_and_lineage_dir,args.seq_manifest,args.json_directory)
 
     if args.tabulate_jsons:
-        concatenate_and_read_json(args.json_directory,args.check_all)
+        concatenate_and_read_json(args.json_directory)
 
 if __name__ == "__main__":
     main()

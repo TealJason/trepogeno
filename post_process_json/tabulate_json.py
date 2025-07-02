@@ -5,14 +5,10 @@ import pandas as pd
 
 from nextstrain.post_process_json.style import style_html
 
-def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
+def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary):
     keys = list(json_dict)
     sample_id = keys[0]
-    check_all = True
-    if check_all == False:
-        lineage_list = json_dict[sample_id]["phylogenetics"]["lineage"]["lineage"]
-    else:
-        lineage_list = list(json_dict[sample_id]["lineage_calls"])
+    lineage_list = list(json_dict[sample_id]["lineage_calls"])
         
 
     single_sample_dictionary_full = {
@@ -23,27 +19,16 @@ def get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all):
         possible_calls = 0
         calls_made = 0
 
-        if check_all == False:
-            calls = json_dict[sample_id]["phylogenetics"]["lineage"]["calls"].get(lineage, {})
+        
+        calls = json_dict[sample_id]["lineage_calls"].get(lineage, {})
 
-            for sublineage, probes in calls.items():
-                for probe_id, probe_data in probes.items():
-                    genotype = probe_data.get("genotype")
-                    if genotype == [0, 0]:
-                        possible_calls += 1
-                    elif genotype == [1, 1] or genotype == [0, 1]:
-                        possible_calls += 1
-                        calls_made += 1
-        else:
-            calls = json_dict[sample_id]["lineage_calls"].get(lineage, {})
-
-            for probe_id, probe_data in calls.items():
-                genotype = probe_data.get("genotype")
-                if genotype == [0, 0]:
-                    possible_calls += 1
-                elif genotype == [1, 1] or genotype == [0, 1]:
-                    possible_calls += 1
-                    calls_made += 1
+        for probe_id, probe_data in calls.items():
+            genotype = probe_data.get("genotype")
+            if genotype == [0, 0]:
+                possible_calls += 1
+            elif genotype == [1, 1] or genotype == [0, 1]:
+                possible_calls += 1
+                calls_made += 1
 
         single_sample_dictionary_full[sample_id][lineage] = {
             "calls_made": calls_made,
@@ -81,7 +66,7 @@ def filter_to_single_rows(call_summary_table):
     call_summary_supported_best.to_csv("best_lineages_from_all.csv", index=False)
     print(call_summary_supported_best)
 
-def create_and_write_table(full_dictionary, all_checked):
+def create_and_write_table(full_dictionary):
     data = []
     for sample_id, lineages in full_dictionary.items():
         for lineage, stats in lineages.items():
@@ -95,21 +80,15 @@ def create_and_write_table(full_dictionary, all_checked):
 
     call_summary_table = pd.DataFrame(data)
 
-    if all_checked:
-        csv_path = "./snps_called_all.csv"
-        html_path = "./snps_called_all.html"
-        call_summary_table.to_csv(csv_path, index=False)
-        call_summary_table.to_html(html_path, index=False)
-        filter_to_single_rows(call_summary_table)
-    else:
-        csv_path = "./snps_called.csv"
-        html_path = "./snps_called.html"
-        call_summary_table.to_csv(csv_path, index=False)
-        call_summary_table.to_html(html_path, index=False)
+
+    csv_path = "./snps_called.csv"
+    html_path = "./snps_called.html"
+    call_summary_table.to_csv(csv_path, index=False)
+    call_summary_table.to_html(html_path, index=False)
 
     style_html(html_path)
 
-def run_tabulate_json(json_directory, check_all):
+def run_tabulate_json(json_directory):
     json_list = get_json_file_paths(json_directory)
 
     full_dictionary = {}
@@ -117,7 +96,7 @@ def run_tabulate_json(json_directory, check_all):
     for path in json_list:
         with open(path) as json_path:
             json_dict = json.load(json_path)
-            full_dictionary = get_all_lineage_calls_for_one_sample(json_dict,full_dictionary,check_all)
+            full_dictionary = get_all_lineage_calls_for_one_sample(json_dict,full_dictionary)
 
-    create_and_write_table(full_dictionary,check_all)
+    create_and_write_table(full_dictionary)
 
