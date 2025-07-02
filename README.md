@@ -44,21 +44,12 @@ python -m nextstrain.genotreponema \
 --tabulate_jsons
 
 ## All paramaters 
-'''
-Make probe
+``` 
+
+Make Probes
+-----------
 --make_probes
     Used to indicate you wish to generate a new set of probes during the work flow
-
-Lineage Calling
---lineage_call
-    Used to indicate you wish to call lineages
-
-Json processing
---tabulate_jsons
-    Used to indicate you wish to proccess and tabulate the jsons output by mykrobe
-
---json_directory
-    A path to the directory for mykrobe to save json files after calling a lineage
 
 --type_scheme
     Path to the file that maps snps to specific genomic coordiantes to lineages, to learn more review mykrobe custom lineage calling documentation.
@@ -66,10 +57,32 @@ Json processing
 --genomic_reference
     A fasta file that acts as the genomic reference, must match the reference in the type scheme
 
+--probe_and_lineage_dir
+    This is the directory in which to save the probe and lineage file during probe creation
+
+
+Lineage Calling
+-----------
+--lineage_call
+    Used to indicate you wish to call lineages
+
+--json_directory
+    A path to the directory for mykrobe to save json files after calling a lineage
+
 --seq_manifest
     A manifest of Sample ID sequences as a CSV, the heading should be ID,Read1,Read2. If you are not using paired end fastqs and only have one Read leave a trailing , e.g. 'ReadID,/fastq/ReadID1.fastq,'
 
+--genomic_reference
+    A fasta file that acts as the genomic reference, must match the reference in the type scheme
+
 --probe_and_lineage_dir
     This is the directory in which to save the probe and lineage file during probe creation
-'''
+
+
+Json Processing
+-----------
+--tabulate_jsons
+    Used to indicate you wish to proccess and tabulate the jsons output by mykrobe
+
+```
 
