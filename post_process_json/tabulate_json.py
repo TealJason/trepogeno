@@ -64,7 +64,6 @@ def filter_to_single_rows(call_summary_table):
 
     # Save or display
     call_summary_supported_best.to_csv("best_lineages_from_all.csv", index=False)
-    print(call_summary_supported_best)
 
 def create_and_write_table(full_dictionary):
     data = []
@@ -85,6 +84,7 @@ def create_and_write_table(full_dictionary):
     html_path = "./snps_called.html"
     call_summary_table.to_csv(csv_path, index=False)
     call_summary_table.to_html(html_path, index=False)
+    filter_to_single_rows(call_summary_table)
 
     style_html(html_path)
 
