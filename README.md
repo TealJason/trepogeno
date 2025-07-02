@@ -84,5 +84,8 @@ Json Processing
 --tabulate_jsons
     Used to indicate you wish to proccess and tabulate the jsons output by mykrobe
 
+--json_directory
+    A path to the directory mykrobe saved its json's for processing
+
 ```
 
