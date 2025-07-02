@@ -17,8 +17,8 @@ If you experience problems with 'cannot find mccortex31 expected to find it at p
 This is the main script, call it with python -m nextstrain.genotreponema and provide the relevent arguments
 
 ## create_typing_scheme
-This subdirectory contains scripts that with a vcf and reference could be used to semi-automate the process of screating a 
-typing scheme for later probe creation and lineage file creation for lineage calling.
+This subdirectory contains scripts that with a vcf and reference could be used to streamline the process of creating a 
+typing scheme for later probe creation and lineage calling.
 
 ## example command to create probes and lineage files
 
