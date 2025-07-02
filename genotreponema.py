@@ -59,9 +59,8 @@ def parse_arguments():
 
     args = parser.parse_args()
 
-    if (args.lineage_call or args.tabulate_jsons) and args.json_directory is None:
-        parser.error("The json_directory was not found or provided correctly")
-        parser.error("The json_directory is required to know where to save jsons for calling and where to read them from for processing")
+    if  args.tabulate_jsons and args.json_directory is None:
+        parser.error("The json_directory was not found or provided correctly for processing!")
         exit(1)
 
     if args.make_probes:
@@ -70,11 +69,18 @@ def parse_arguments():
             exit(1)
         if not args.genomic_reference:    
             parser.error("The genomic reference was not provided but is required for making probes")
-        exit(1)
-        if not args.probe_and_linege_dir:    
-            parser.error("A directory for saving the probes and lineage.json is required for making probes")
-        exit(1)
-    
+            exit(1)
+
+    if args.lineage_call:
+        if not args.genomic_reference:
+            parser.error("The genomic reference was not provided but is required for calling lineages")
+            exit(1)
+        if not args.seq_manifest:
+            parser.error("A sequence manifest was not provided but is required for calling lineages")
+            exit(1)
+        if not args.json_directory:
+            parser.error("A direcory to store jsons was not provided but is required for calling lineages")
+            exit(1)
     return args
 
 def create_probes_from_type_scheme(lineage_directory,type_scheme,genomic_reference,probe_and_lineage_dir):
