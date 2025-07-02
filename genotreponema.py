@@ -47,7 +47,7 @@ def parse_arguments():
 
     parser.add_argument(
         "--seq_manifest",
-        help="If you want to call preform back to back lineage calls you can provide a manifest of reads for which lineage calls will be preformed",
+        help="A manifest of Sample ID sequences as a CSV, the heading should be ID,Read1,Read2. ",
         type=Path,
     )
 
