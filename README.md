@@ -22,7 +22,7 @@ typing scheme for later probe creation and lineage calling.
 
 ## example command to create probes and lineage files
 
-python -m nextstrain.genotreponema \
+python -m nextstrain.trepogeno \
 --json_directory files/json_outputs \
 --type_scheme files/Tpallidum.SNP.table_hierarchies_2025-05-14.tsv \
 --genomic_reference files/reference/nc_021508.fasta \
@@ -31,7 +31,7 @@ python -m nextstrain.genotreponema \
 
 ## example command to call a lineage
 
-python -m nextstrain.genotreponema \
+python -m nextstrain.trepogeno \
 --json_directory files/json_outputs \
 --genomic_reference files/reference/nc_021508.fasta \
 --probe_and_lineage_dir files/probes \
@@ -39,7 +39,7 @@ python -m nextstrain.genotreponema \
 --lineage_call
 
 ## example command to call process and summarise the mykrobe json outputs
-python -m nextstrain.genotreponema \
+python -m nextstrain.trepogeno \
 --json_directory files/json_outputs \
 --tabulate_jsons
 
