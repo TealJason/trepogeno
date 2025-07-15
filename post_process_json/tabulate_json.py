@@ -88,6 +88,39 @@ def create_and_write_table(full_dictionary):
 
     style_html(html_path)
 
+def get_mykrobe_best_call(genotype):
+
+    full_lineage_data = genotype["phylogenetics"]
+
+    genotype_details = full_lineage_data['calls_summary']
+    genotype_list = list(genotype_details.keys())
+    # intialise empty values for best score and corresponding genotype
+    best_score = 0
+    best_genotype = None
+    # node support is the number of 'good nodes' called by mykrobe
+    # needs to be X/Y, where Y is the total number of levels at that genotype
+
+# loop through each genotype
+    for genotype in genotype_list:
+        # the maximum score we can get is the total depth of the heirarchy
+        max_score = genotype_details[genotype]['tree_depth']
+        # the actual score is a sum of the values within each levels call
+        actual_score = sum(list(genotype_details[genotype]['genotypes'].values()))
+        # if actual score is equal to the max score, then this is the best genotype
+        # BUT WE NEED TO DEAL WITH INSTANCES WHERE WE MIGHT HAVE A GREAT CALL 3.7.25 say AND A LESS GREAT CALL 3.6.1.1.2 say BUT BECACUSE THE HEIRARHCY IS BIGGER FOR 3.6.1.1.2 WE INADVERTANTLY CALL THAT
+        if actual_score == max_score:
+            best_score = actual_score
+            best_genotype = genotype
+            #node_support = genotype_details[best_genotype]['good_nodes']
+        # if actual score is < max score, but is greater than the current best score,
+        # then this is our best genotype for the moment
+        elif actual_score < max_score and actual_score > best_score:
+            best_score = actual_score
+            best_genotype = genotype
+            #node_support = genotype_details[best_genotype]['good_nodes']
+
+    print(best_genotype)
+
 def run_tabulate_json(json_directory):
     json_list = get_json_file_paths(json_directory)
 
@@ -100,3 +133,6 @@ def run_tabulate_json(json_directory):
 
     create_and_write_table(full_dictionary)
 
+    for file_path in json_list:
+        genotype = json.load(file_path)
+        get_mykrobe_best_call(genotype)
