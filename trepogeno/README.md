@@ -1,9 +1,9 @@
 This repo contains scripts that intend to wrap around mykrobe for eventual lineage calling of treponema strains
 
 To set up functionality you must: 
-1. cd nextstrain/trepogeno/
-2. pip3 install -e . 
-3. run commands
+1. git clone --recusrive https://gitlab.internal.sanger.ac.uk/sanger-pathogens/nextstrain.git
+2. cd nextstrain/trepogeno/
+3. pip3 install -e . 
 
 If you experience problems with 'cannot find mccortex31 expected to find it at path/expected/mccortex31' try the below
 
