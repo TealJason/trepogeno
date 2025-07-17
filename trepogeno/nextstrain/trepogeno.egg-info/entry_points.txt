@@ -1,0 +1,2 @@
+[console_scripts]
+trepogeno = nextstrain.trepogeno:main

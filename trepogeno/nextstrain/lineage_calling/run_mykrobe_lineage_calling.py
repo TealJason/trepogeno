@@ -1,22 +1,24 @@
 from types import SimpleNamespace as Namespace  
 from  nextstrain.mykrobe.src.mykrobe.cmds.amr import run as run_lineage_call
+import os 
 
-def check_lineage_file(probe_directory,):
-    print(f"check_lineage_file at {probe_directory}/lineage.json")
+def check_lineage_file(json_directory,):
+    os.makedirs(json_directory, exist_ok=True)
+
 
 def get_sequence(line):
     ID, sequence1, sequence2 = line.strip().split(",")
     return ID, sequence1, sequence2
 
-def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_directory):
-    check_lineage_file(probe_json_directory)
+def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_directory,probe_lineage_name):
+    check_lineage_file(json_directory)
 
     with open(sequence_manifest, "r") as manifest:
         next(manifest)  # Skip header line
         for line in manifest:
             if not line.strip():
                 continue  # Skip empty lines
-            if line.startswith("#"): # skip comments
+            if line.startswith("#"): # Skip comments
                   continue
 
             ID, sequence1, sequence2 = get_sequence(line)
@@ -24,9 +26,16 @@ def run_mykrobe_lineage_call(probe_json_directory, sequence_manifest,json_direct
             if sequence2:
                 sequences.append(sequence2)
 
+            if probe_lineage_name:
+                probe_name = f"{probe_lineage_name}.fa"
+                lineage_name = f"{probe_lineage_name}.json"
+            else:
+                probe_name = "probe.fa"
+                lineage_name = "lineage.json"
+
             args = Namespace(
-                custom_probe_set_path=f"{probe_json_directory}/probes.fa",
-                custom_lineage_json=f"{probe_json_directory}/lineage.json",
+                custom_probe_set_path=f"{probe_json_directory}/{probe_name}",
+                custom_lineage_json=f"{probe_json_directory}/{lineage_name}",
                 species="custom",
                 report_all_calls=True,
                 sample=ID,

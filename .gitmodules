@@ -1,3 +1,3 @@
-[submodule "mykrobe"]
-	path = mykrobe
+[submodule "trepogeno/nextstrain/mykrobe"]
+	path = trepogeno/nextstrain/mykrobe
 	url = https://github.com/Mykrobe-tools/mykrobe.git
