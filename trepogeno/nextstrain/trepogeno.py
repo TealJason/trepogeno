@@ -4,6 +4,7 @@ import logging
 import sys
 
 # Dynamically add mykrobe source to sys.path
+#This is to make importing funcitons from the mykrobe submodule easier
 mykrobe_src = Path(__file__).resolve().parent / "mykrobe" / "src"
 if mykrobe_src.exists():
     sys.path.insert(0, str(mykrobe_src))
@@ -11,7 +12,7 @@ else:
     raise ImportError(f"Expected mykrobe src at {mykrobe_src}, but it was not found.")
 
 
-#custom functions
+#Custom functions, these import functions from other script to keep things modular  
 from nextstrain.post_process_json.tabulate_json import run_tabulate_json
 from nextstrain.create_probes.create_probes import create_probes
 from nextstrain.lineage_calling.run_mykrobe_lineage_calling import run_mykrobe_lineage_call
@@ -78,7 +79,7 @@ def parse_arguments():
     if  args.tabulate_jsons and args.json_directory is None:
         parser.error("The json_directory was not found or provided correctly for processing!")
 
-    #Ensure arguments are correctly provided
+    #Ensure arguments are correctly provided some operating modes require other arguments to be set
     if args.make_probes:
         if not args.type_scheme:
             parser.error("The typing scheme was not provided but is required for making probes")
@@ -96,8 +97,8 @@ def parse_arguments():
             parser.error("A direcory to store jsons was not provided but is required for calling lineages")
     return args
 
-def create_probes_from_type_scheme(lineage_directory,type_scheme,genomic_reference,probe_and_lineage_dir,probe_lineage_name):
-    create_probes(lineage_directory,type_scheme,genomic_reference,probe_and_lineage_dir,probe_lineage_name)
+def create_probes_from_type_scheme(type_scheme,genomic_reference,probe_and_lineage_dir,probe_lineage_name):
+    create_probes(type_scheme,genomic_reference,probe_and_lineage_dir,probe_lineage_name)
 
 def run_lineage_call(probe_directory,sequence_manifest,json_directory,probe_lineage_name):
     run_mykrobe_lineage_call(probe_directory,sequence_manifest,json_directory,probe_lineage_name)
@@ -109,8 +110,7 @@ def main():
     args = parse_arguments()
 
     if args.make_probes: 
-        lineage_directory = args.probe_and_lineage_dir + "/lineage.json"
-        create_probes_from_type_scheme(lineage_directory, args.type_scheme, args.genomic_reference, args.probe_and_lineage_dir, args.probe_lineage_name)
+        create_probes_from_type_scheme( args.type_scheme, args.genomic_reference, args.probe_and_lineage_dir, args.probe_lineage_name)
 
     if args.lineage_call:
         run_lineage_call(args.probe_and_lineage_dir,args.seq_manifest,args.json_directory,args.probe_lineage_name)
