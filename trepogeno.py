@@ -38,11 +38,13 @@ def parse_arguments():
     parser.add_argument(
         "--type_scheme",
         help="The reference coordinate file mapping snps and lineages to genomic positions",
+        type=Path
     )
 
     parser.add_argument(
         "--genomic_reference",
         help="The path to the genomic reference fasta",
+        type=Path
     )
 
     parser.add_argument(
@@ -55,6 +57,7 @@ def parse_arguments():
         "--probe_and_lineage_dir",
         help="The directory in which to save the probe and lineage files if being regenerated and or the location in which the probe and lineage file can be found for lineage calling",
         default="./",
+        type=Path
     )
 
     parser.add_argument(
@@ -66,26 +69,23 @@ def parse_arguments():
 
     if  args.tabulate_jsons and args.json_directory is None:
         parser.error("The json_directory was not found or provided correctly for processing!")
-        exit(1)
 
+    #Ensure arguments are correctly provided
     if args.make_probes:
         if not args.type_scheme:
-            parser.error("The typeing scheme was not provided but is required for making probes")
-            exit(1)
+            parser.error("The typing scheme was not provided but is required for making probes")
+
         if not args.genomic_reference:    
             parser.error("The genomic reference was not provided but is required for making probes")
-            exit(1)
 
     if args.lineage_call:
         if not args.genomic_reference:
             parser.error("The genomic reference was not provided but is required for calling lineages")
-            exit(1)
+
         if not args.seq_manifest:
             parser.error("A sequence manifest was not provided but is required for calling lineages")
-            exit(1)
         if not args.json_directory:
             parser.error("A direcory to store jsons was not provided but is required for calling lineages")
-            exit(1)
     return args
 
 def create_probes_from_type_scheme(lineage_directory,type_scheme,genomic_reference,probe_and_lineage_dir,probe_lineage_name):

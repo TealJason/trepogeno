@@ -1,0 +1,3 @@
+[console_scripts]
+genotreponema = nextstrain.genotreponema.cli:main
+

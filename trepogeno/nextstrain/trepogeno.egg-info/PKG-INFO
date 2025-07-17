@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: trepogeno
+Version: 0.1.0
+Summary: Wrapper tool for streamlining lineage calling on bulk sets of user fastq data
+Author-email: Jason Beard <jasonthomasbeard@gmail.com>
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=1.5
