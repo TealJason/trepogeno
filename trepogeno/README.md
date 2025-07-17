@@ -1,11 +1,11 @@
 This repo contains scripts that intend to wrap around mykrobe for eventual lineage calling of treponema strains
 
 To set up functionality you must: 
-1. cd mykrobe
-2. pip3 install . 
-3. cd. ../../
+1. cd nextstrain/trepogeno/
+2. pip3 install -e . 
+3. run commands
 
-If you experience problems with 'cannot find mccortex31 expected to find it at path/mccortex31' try the below
+If you experience problems with 'cannot find mccortex31 expected to find it at path/expected/mccortex31' try the below
 
 1. cd mykrobe
 2. git clone --recursive -b geno_kmer_count https://github.com/Mykrobe-tools/mccortex mccortex
@@ -22,7 +22,7 @@ typing scheme for later probe creation and lineage calling.
 
 ## example command to create probes and lineage files
 
-python -m nextstrain.trepogeno \
+trepogeno \
 --json_directory files/json_outputs \
 --type_scheme files/Tpallidum.SNP.table_hierarchies_2025-05-14.tsv \
 --genomic_reference files/reference/nc_021508.fasta \
@@ -31,7 +31,7 @@ python -m nextstrain.trepogeno \
 
 ## example command to call a lineage
 
-python -m nextstrain.trepogeno \
+trepogeno \
 --json_directory files/json_outputs \
 --genomic_reference files/reference/nc_021508.fasta \
 --probe_and_lineage_dir files/probes \
@@ -39,15 +39,9 @@ python -m nextstrain.trepogeno \
 --lineage_call
 
 ## example command to call process and summarise the mykrobe json outputs
-python -m nextstrain.trepogeno \
---json_directory files/json_outputs \
---tabulate_jsons
-
-
 trepogeno \
 --json_directory files/json_outputs \
 --tabulate_jsons
-
 
 ## All paramaters 
 ``` 
