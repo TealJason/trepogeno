@@ -1,6 +1,15 @@
 import argparse
 from pathlib import Path
 import logging
+import sys
+
+# Dynamically add mykrobe source to sys.path
+mykrobe_src = Path(__file__).resolve().parent / "mykrobe" / "src"
+if mykrobe_src.exists():
+    sys.path.insert(0, str(mykrobe_src))
+else:
+    raise ImportError(f"Expected mykrobe src at {mykrobe_src}, but it was not found.")
+
 
 #custom functions
 from nextstrain.post_process_json.tabulate_json import run_tabulate_json

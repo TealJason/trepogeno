@@ -43,6 +43,12 @@ python -m nextstrain.trepogeno \
 --json_directory files/json_outputs \
 --tabulate_jsons
 
+
+trepogeno \
+--json_directory files/json_outputs \
+--tabulate_jsons
+
+
 ## All paramaters 
 ``` 
 
