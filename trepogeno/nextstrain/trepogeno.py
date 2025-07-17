@@ -65,8 +65,7 @@ def parse_arguments():
     parser.add_argument(
         "--probe_and_lineage_dir",
         help="The directory in which to save the probe and lineage files if being regenerated and or the location in which the probe and lineage file can be found for lineage calling",
-        default="./",
-        type=Path
+        default="./"
     )
 
     parser.add_argument(
